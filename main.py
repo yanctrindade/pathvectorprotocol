@@ -1,3 +1,4 @@
+import threading
 class Node:
     id = -1
     neighbors = []
@@ -13,11 +14,24 @@ class Neighbor:
     def __init__(self, id, cost):
         self.id = id
         self.cost = cost
+        
+class threadNo(threading.Thread):
+    node = None
+    
+    def __init__(self, listNo):
+        threading.Thread.__init__(self)
+        self.node = listNo
+        print node.id
+        
+    def run(self):
+        print "No "+node.id
+        
 
 if __name__ == '__main__':
 
     topology = [] #array de nodes
-
+    listThreads = []
+    
     #usuario digita a topologia
     while True:
         userInput = raw_input("Entre com o no ou digite -1 para encerrar:")
@@ -42,8 +56,16 @@ if __name__ == '__main__':
 
                 newNeighbor = Neighbor(id, cost)
                 node.neighbors.append(newNeighbor)
-                topology.append(node)
-
-    #começa a criar os nós
-    #1) instanciar os nodes do array
-    #2) criar tabela
+            topology.append(node)
+                
+    for element in topology:
+        #print (element.id)
+        thrNo = threadNo(element)
+        
+        thrNo.start()
+        
+        listThreads.append(thrNo)
+        
+    for j in listThreads:
+        j.join()
+        
