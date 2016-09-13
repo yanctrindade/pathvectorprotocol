@@ -1,4 +1,8 @@
 import threading
+import time
+
+from multiprocessing import Queue
+
 
 class Node:
     id = -1
@@ -29,7 +33,7 @@ class Node:
             list.append(len(pathList))  # number of jumps to destiny -> path list size == number of jumps
             list.append(pathList) #path list
             self.routingTable[neighbor.id] = list #destiny node e a key do dicionario
-        print self.routingTable
+        #print self.routingTable
 
 
 class Neighbor:
@@ -40,17 +44,26 @@ class Neighbor:
         self.id = id
         self.cost = cost
 
-        
+
 class threadNo(threading.Thread):
     node = None
     
     def __init__(self, element):
         threading.Thread.__init__(self)
         self.node = element
+        self.setName(element.id)
         
     def run(self):
         self.node.creatingPathTable()
 
+        while True:
+            if q.empty():
+                lock.acquire()
+                q.put(self.node.routingTable)
+                lock.release()
+            else:
+                pathVector = q.get()
+                if pathVector is None: return
 
 
 if __name__ == '__main__':
@@ -97,7 +110,10 @@ if __name__ == '__main__':
                 newNeighbor = Neighbor(id, cost)
                 node.neighbors.append(newNeighbor)
             topology.append(node)
-                
+
+    q = Queue()
+    lock = threading.Lock()
+
     for element in topology:
         thrNo = threadNo(element)
         
