@@ -1,10 +1,35 @@
 import threading
+
 class Node:
     id = -1
     neighbors = []
+    routingTable = {}
 
     def __init__ (self, id):
         self.id = id
+        self.neighbors = []
+        self.routingTable = {}
+
+    def creatingPathTable(self):
+
+        list = []
+        list.append(0) #node itself
+        list.append(1) #jump
+        pathList = []
+        pathList.append(self.id)
+        list.append(pathList) #path
+        self.routingTable[self.id] = list
+
+        for neighbor in self.neighbors:
+            list = []
+            list.append(neighbor.cost) #cost
+            pathList = []
+            pathList.append(self.id)
+            pathList.append(neighbor.id)
+            list.append(len(pathList))  # number of jumps to destiny -> path list size == number of jumps
+            list.append(pathList) #path list
+            self.routingTable[neighbor.id] = list #destiny node e a key do dicionario
+        print self.routingTable
 
 
 class Neighbor:
@@ -14,18 +39,19 @@ class Neighbor:
     def __init__(self, id, cost):
         self.id = id
         self.cost = cost
+
         
 class threadNo(threading.Thread):
     node = None
     
-    def __init__(self, listNo):
+    def __init__(self, element):
         threading.Thread.__init__(self)
-        self.node = listNo
-        print node.id
+        self.node = element
         
     def run(self):
-        print "No "+node.id
-        
+        self.node.creatingPathTable()
+
+
 
 if __name__ == '__main__':
 
@@ -33,14 +59,28 @@ if __name__ == '__main__':
     listThreads = []
     
     #usuario digita a topologia
-    while True:
-        userInput = raw_input("Entre com o no ou digite -1 para encerrar:")
+    #while True:
+    userInput = []
+    string1 = "1; 2[4]; 3[1];"
+    string2 = "2; 1[4]; 3[2];"
+    string3 = "3; 1[1]; 2[3];"
+    string4 = "-1"
+    userInput.append(string1)
+    userInput.append(string2)
+    userInput.append(string3)
+    userInput.append(string4)
+    for string in userInput:
+        #userInput = raw_input("Entre com o no ou digite -1 para encerrar:")
+
         # se -1, encerre input
         # senao pergunte sobre os vizinhos
-        if userInput == "-1":
-            break
+        #if userInput == "-1":
+        if string == "-1":
+            #break
+            var = 1+1
         else:
-            input = userInput.split(";")
+            #input = userInput.split(";")
+            input = string.split(";")
             #new node
             node = Node(input[0])
             #remote FIRST and LAST element of list
@@ -59,7 +99,6 @@ if __name__ == '__main__':
             topology.append(node)
                 
     for element in topology:
-        #print (element.id)
         thrNo = threadNo(element)
         
         thrNo.start()
