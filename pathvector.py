@@ -1,4 +1,5 @@
 import time
+import sys
 
 ##Variavel que controla se houve algum tipo de atualizacao entre
 # as tabelas de roteamento dos nos
@@ -99,36 +100,30 @@ if __name__ == '__main__':
     topology = [] #array de nodes
     listThreads = []
     
-    #usuario digita a topologia
-    while True:
-        userInput = []
-        
-        #Monta o vetor de topologia dos nos
-        userInput = raw_input("Entre com o no ou digite -1 para encerrar:")
-         
-        # se -1, encerre input
-        # senao pergunte sobre os vizinhos
-        if userInput == "-1":
-            break
-        else:
-            input = userInput.split(";")
-            #new node
-            node = Node(input[0])
-            #remote FIRST and LAST element of list
-            input.pop(0)
-            input.pop()
-            for neighbor in input:
-                list = neighbor.split("[") #list[0] is ID and list[1] is COST
-                #remove whitespace from id
-                id = "".join(list[0].split())
-                #remove ] from cost
-                cost = list[1][:-1]
-                
-                newNeighbor = Neighbor(id, cost)
-                node.neighbors.append(newNeighbor)
-            topology.append(node)
+    print("Montando a topologia da rede...")
     
+    sys.argv.pop(0)
     
+    #Monta a topologia dos nos de acordo com o q foi passado nos argumentos
+    for nodeLine in sys.argv:
+        input = nodeLine.split(";")
+        #new node
+        node = Node(input[0])
+        #remote FIRST and LAST element of list
+        input.pop(0)
+        input.pop()
+        for neighbor in input:
+            list = neighbor.split("[") #list[0] is ID and list[1] is COST
+            #remove whitespace from id
+            id = "".join(list[0].split())
+            #remove ] from cost
+            cost = list[1][:-1]
+            
+            newNeighbor = Neighbor(id, cost)
+            node.neighbors.append(newNeighbor)
+        topology.append(node)    
+    
+    print("Topologia montada...")    
     #Monta a Path Table para cada no       
     for node in topology:
         node.creatingPathTable()
