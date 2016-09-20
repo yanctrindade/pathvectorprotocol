@@ -37,5 +37,7 @@ Não há limitação, testes foram realizados com 3 e 6 nós.
 Resultado:
 São mostrados o tempo de execução e tabelas de roteamento de cada nó ao fim do processamento e o programa é encerrado.
 
+Basta dar enter duas vezes para ver o resultado final e a tabela completa de roteamento para cada nó.
+
 Limitações: 
 Não são aceitos nós com arestas negativas, atenção ao input informado
