@@ -123,10 +123,19 @@ if __name__ == '__main__':
             node.neighbors.append(newNeighbor)
         topology.append(node)    
     
-    print("Topologia montada...")    
+    print("Topologia montada...\n")
+    
     #Monta a Path Table para cada no       
     for node in topology:
         node.creatingPathTable()
+    
+    print("Path tables primarias...\n")
+    for node in topology:
+        print("TABELA NO "+str(node.id))
+        node.showPathTable()
+        print ""
+    
+    raw_input("Digite ENTER para continuar...")
     
     # Cada no manda sua Path Vector para cada um dos seus vizinhos.
     # Cada vizinho verifica se existe alguma rota melhor baseado no custo e na quantidade de saltos
