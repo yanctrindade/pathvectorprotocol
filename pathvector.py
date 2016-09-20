@@ -5,6 +5,7 @@ import sys
 # as tabelas de roteamento dos nos
 isChanged = True
 
+
 ##Classe que representa os nos assim como suas respectivas funcoes
 class Node:
     id = -1
@@ -55,6 +56,11 @@ class Node:
                        list.append(len(pathList))
                        list.append(pathList)
                        self.routingTable[key] = list
+                       print "No "+self.id+" alterado"
+                       print "Nova path table"
+                       self.showPathTable()
+                       print ""
+                       #qtdAlteracoes = qtdAlteracoes+1
                        isChanged = True
                     ## Caso os custos sejam iguais eh avaliado o numero de saltos realizados
                    if cost == newCost:
@@ -67,6 +73,11 @@ class Node:
                            list.append(len(pathList))
                            list.append(pathList)
                            self.routingTable[key] = list
+                           print "No "+self.id+" alterado"
+                           print "Nova path table"
+                           self.showPathTable()
+                           print ""
+                           #qtdAlteracoes = qtdAlteracoes+1
                            isChanged = True
                    
             else:
@@ -76,6 +87,11 @@ class Node:
                 list.append(len(pathList))
                 list.append(pathList)
                 self.routingTable[key] = list
+                print "Novo registro adicionado da tabela do no"+self.id
+                print "Nova path table"
+                self.showPathTable()
+                print ""
+                #qtdAlteracoes = qtdAlteracoes+1
                 isChanged = True
     
     ##Funcao que mostra a tabela de um no. 
@@ -141,17 +157,28 @@ if __name__ == '__main__':
     # Cada no manda sua Path Vector para cada um dos seus vizinhos.
     # Cada vizinho verifica se existe alguma rota melhor baseado no custo e na quantidade de saltos
     # Caso todas as trocas de tabelas ocorram e nenhuma atualizacao aconteca,
-    #     o algoritmo entende que houve convergencia     
+    #     o algoritmo entende que houve convergencia    
+    qtdSaltos = 0 
+    ##Variavel que conta qualquer alteracao que ocorra durante as iteracoes dos saltos
+    #qtdAlteracoes = 0
+    
     while isChanged:
         isChanged = False
         for node in topology:
             for neighbor in node.neighbors:
                 topology[int(neighbor.id)-1].updatingPathTable(node.routingTable, node.id)
+        qtdSaltos = qtdSaltos+1
                 
     finalTime = time.time()
     
+    raw_input("Fim da execucao do protocolo... Digite ENTER para continuar...")
+    
+    print "--------------------------------------------------------------------------"
+    print "O protocolo convergiu em "+str(qtdSaltos)+" saltos"
+    #print "Media: "+str(qtdAlteracoes/qtdSaltos)+" alteracoes/saltos"
     # Registro do tempo de execucao
     print ("\nO protocolo convergiu em %f ms\n" %(finalTime - initialTime))
+    print "--------------------------------------------------------------------------"
     
     #Mostrando as tabelas dos nos ao final da execucao do protocolo
     print "Tabelas finais dos nos"
