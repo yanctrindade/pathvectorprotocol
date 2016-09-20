@@ -5,6 +5,8 @@ import sys
 # as tabelas de roteamento dos nos
 isChanged = True
 
+##Variavel que conta qualquer alteracao que ocorra durante as iteracoes dos saltos
+qtdAlteracoes = 0
 
 ##Classe que representa os nos assim como suas respectivas funcoes
 class Node:
@@ -42,6 +44,8 @@ class Node:
     
     ##Funcao responsavel por atualizar a tabela de roteamento
     def updatingPathTable(self, routingTable, id):
+        global isChanged
+        global qtdAlteracoes
         for key in routingTable:
             ## Caso ja exista o no na tabela compara os custos, senao adiciona um novo registro na tabela
             if self.routingTable.has_key(key):
@@ -60,7 +64,7 @@ class Node:
                        print "Nova path table"
                        self.showPathTable()
                        print ""
-                       #qtdAlteracoes = qtdAlteracoes+1
+                       qtdAlteracoes = qtdAlteracoes+1
                        isChanged = True
                     ## Caso os custos sejam iguais eh avaliado o numero de saltos realizados
                    if cost == newCost:
@@ -77,7 +81,7 @@ class Node:
                            print "Nova path table"
                            self.showPathTable()
                            print ""
-                           #qtdAlteracoes = qtdAlteracoes+1
+                           qtdAlteracoes = qtdAlteracoes+1
                            isChanged = True
                    
             else:
@@ -91,7 +95,7 @@ class Node:
                 print "Nova path table"
                 self.showPathTable()
                 print ""
-                #qtdAlteracoes = qtdAlteracoes+1
+                qtdAlteracoes = qtdAlteracoes+1
                 isChanged = True
     
     ##Funcao que mostra a tabela de um no. 
@@ -175,7 +179,7 @@ if __name__ == '__main__':
     
     print "--------------------------------------------------------------------------"
     print "O protocolo convergiu em "+str(qtdSaltos)+" saltos"
-    #print "Media: "+str(qtdAlteracoes/qtdSaltos)+" alteracoes/saltos"
+    print "Media: "+str(qtdAlteracoes/qtdSaltos)+" alteracoes/saltos"
     # Registro do tempo de execucao
     print ("\nO protocolo convergiu em %f ms\n" %(finalTime - initialTime))
     print "--------------------------------------------------------------------------"
