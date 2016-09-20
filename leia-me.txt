@@ -12,32 +12,30 @@ YAN TRINDADE - 11/0152794
 O TRABALHO FOI IMPLEMENTADO EM PHYTON V2.7
 
 Execução do Programa:
+
 Para executar o programa, deve-se apenas digitar no console 
-“phyton pathvector.py”
+“phyton pathvector.py” + argumentos copiados dos arquivos Topologia6nos.txt
+
+Exemplo:
+phyton pathvector.py "1;2[1];4[1];" "2;1[1];4[1];3[2];" "3;2[2];4[1];5[1];6[1];" "4;1[1];2[1];3[1];5[2];" "5;3[1];4[2];6[1];" "6;3[1];5[1];"
 
 Input da Topologia:
-A topologia é informada durante execução do programa.
-O programa perguntará sobre a topologia a ser analisada:
+A topologia é informada por linha de comando.
+O programa não perguntará sobre a topologia a ser analisada:
 
-Formato:
+Formato da declaração dos nós:
 nodo; vizinho1[custo]; vizinho2[custo]; · · · , vizinhoN [custo];
 Ex:
  1; 2[4]; 3[1]; (incorreto, não pode ter espaço como caracter inicial)
 1;2[4];3[1]; (correto, espaço é opcional)
 1; 2[4]; 3[1]; (correto, espaço é opcional)
-É necessário ; ao final obrigatoriamente
+É compulsório ; ao final de cada linha
 
 Limitações:
 Não há limitação, testes foram realizados com 3 e 6 nós.
 
-Topologia inserida linha a linha no programa:
-1; 2[1]; 4[1];
-2; 1[1]; 4[1]; 3[2];
-3; 2[2]; 4[1]; 5[1]; 6[1];
-4; 1[1]; 2[1]; 3[1]; 5[2];
-5; 3[1]; 4[2]; 6[1];
-6; 3[1]; 5[1];
--1
-
 Resultado:
-Ver figura em anexo resultado.jpg
+São mostrados o tempo de execução e tabelas de roteamento de cada nó ao fim do processamento e o programa é encerrado.
+
+Limitações: 
+Não são aceitos nós com arestas negativas, atenção ao input informado
