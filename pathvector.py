@@ -129,6 +129,7 @@ if __name__ == '__main__':
     for node in topology:
         node.creatingPathTable()
     
+    #Mostrando as tabelas dos nos antes da execucao do protocolo
     print("Path tables primarias...\n")
     for node in topology:
         print("TABELA NO "+str(node.id))
@@ -152,11 +153,9 @@ if __name__ == '__main__':
     # Registro do tempo de execucao
     print ("\nO protocolo convergiu em %f ms\n" %(finalTime - initialTime))
     
-    #O usuario escolhe um no para mostrar a Path Table final
-    showNode = raw_input("Escolha um no entre 1 e %d para mostrar a path table: " %len(topology))
-    
-    #Caso seja informado um numero de no invalido, nenhuma informacao e mostrada e o programa e finalizado
-    if (int(showNode) > int(len(topology)) or int(showNode) < 1):
-        print "\nNao foi possivel mostrar a Path Table pois o no informado e invalido!"
-    else:
-        topology[int(showNode)-1].showPathTable()
+    #Mostrando as tabelas dos nos ao final da execucao do protocolo
+    print "Tabelas finais dos nos"
+    for node in topology:
+        print("TABELA NO "+str(node.id))
+        node.showPathTable()
+        print ""
